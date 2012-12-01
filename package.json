@@ -1,0 +1,24 @@
+{
+  "name": "show-markdown",
+  "version": "0.0.0",
+  "description": "show editing markdown file on browser",
+  "main": "server.js",
+  "dependencies": {
+    "comet.io": "~0.0.4",
+    "markdown": "~0.4.0",
+    "node-static": "~0.6.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": "",
+  "keywords": [
+    "markdown",
+    "comet.io"
+  ],
+  "author": "Ryota Kato",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
