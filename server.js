@@ -1,7 +1,8 @@
 
 var host = 'localhost';
 var port = 3000;
-var root = __dirname + '/web';
+var root = process.cwd() + '/web';
+//var root = __dirname + '/web';
 
 var exts = { 
   '.md' : 'md', 
@@ -16,6 +17,11 @@ var static = new(require('node-static').Server)(root, {});
 var comet = require('comet.io').createServer();
 var app = require('http').createServer(handler);
 
+// check root dir
+if (!fs.existsSync(root)) {
+  console.log('Error : directory not exists : ' + root);
+  process.exit(1);
+}
 
 var target;
 
