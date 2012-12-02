@@ -1,7 +1,7 @@
 {
-  "name": "show-markdown",
-  "version": "0.0.0",
-  "description": "show editing markdown file on browser",
+  "name": "show-markup",
+  "version": "0.0.1",
+  "description": "show markup file on browser at realtime",
   "main": "server.js",
   "dependencies": {
     "comet.io": "~0.0.4",
