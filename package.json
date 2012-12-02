@@ -17,6 +17,12 @@
     "type": "git",
     "url": "git://github.com/ryotakato/show-markup.git"
   },
+  "keywords": [
+    "comet",
+    "ajax",
+    "markdown",
+    "markup"
+  ],
   "author": "Ryota Kato",
   "license": "MIT",
   "readmeFilename": "README.md"
