@@ -13,12 +13,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": "",
-  "keywords": [
-    "markdown",
-    "comet.io"
-  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ryotakato/show-markup.git"
+  },
   "author": "Ryota Kato",
   "license": "MIT",
+  "gitHead": "a06476b2361e86aee642998dd2ce0148ce38d4f4",
   "readmeFilename": "README.md"
 }
