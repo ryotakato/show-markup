@@ -1,6 +1,6 @@
 {
   "name": "show-markup",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "show markup file on browser at realtime",
   "main": "server.js",
   "dependencies": {

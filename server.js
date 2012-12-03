@@ -1,27 +1,30 @@
 
 var host = 'localhost';
 var port = 3000;
-var root = process.cwd() + '/web';
-//var root = __dirname + '/web';
+var docRoot = process.cwd();
+var webRoot = __dirname + '/web';
 
 var exts = { 
   '.md' : 'md', 
   '.markdown' : 'md'
 };
 
+
 var fs   = require('fs');
 var url = require('url');
 var path = require('path');
 var md   = require('markdown');
-var static = new(require('node-static').Server)(root, {});
+var static = new(require('node-static').Server)(webRoot, {});
 var comet = require('comet.io').createServer();
 var app = require('http').createServer(handler);
 
-// check root dir
-if (!fs.existsSync(root)) {
-  console.log('Error : directory not exists : ' + root);
+// check web dir
+if (!fs.existsSync(webRoot)) {
+  console.log('Error : directory not exists : ' + webRoot);
   process.exit(1);
 }
+
+
 
 var target;
 
@@ -42,9 +45,10 @@ function handler(req, res) {
 
       } else {
 
-        var absPath = root + pathname;
+        var absPath = docRoot + pathname;
 
         exists(absPath, function() {
+          // exists
           fs.stat(absPath, function(err, stats) {
             if (stats.isFile()) {
               // request equals file
@@ -55,15 +59,9 @@ function handler(req, res) {
                 // to send comet.on method
                 target = absPath;
                 // read index
-                fs.readFile(root + '/index.html', function(err, data) {
+                fs.readFile(webRoot+ '/index.html', function(err, data) {
                   res.writeHead(200, {'Content-Type': 'text/html'});
                   res.end(data);
-                });
-              } else {
-                // other
-                static.serve(req, res, function(err, result) {
-                  //if (err) { console.log(err); }
-                  res.end()
                 });
               }
 
@@ -71,6 +69,18 @@ function handler(req, res) {
               // request equals dir
               lsMarkupFiles(res, absPath);
             }
+          });
+
+        },function() {
+          // not exists
+
+          exists(webRoot + pathname, function() {
+            // serve static files
+            static.serve(req, res, function(err, result) {
+              //if (err) { console.log(err); }
+              res.end()
+            });
+
           });
         });
 
@@ -86,7 +96,7 @@ function lsMarkupFiles(res, dirName) {
     for (var i = 0; i < files.length; i ++) {
       var file = files[i];
       if (path.extname(file) in exts) {
-        res.write('<a href="' + path.relative(root, dirName) + '/' + file + '" >' + file + '</a><br/>');
+        res.write('<a href="' + path.relative(docRoot, dirName) + '/' + file + '" >' + file + '</a><br/>');
       }
     }
     res.end();
@@ -120,10 +130,12 @@ function drawFile(socket, file) {
 }
 
 // file exists 
-function exists(file, callback) {
+function exists(file, existsCallback, notExistsCallback) {
   fs.exists(file, function(exists) {
     if (exists) {
-      callback();
+      existsCallback();
+    } else {
+      notExistsCallback();
     }
   });
 }
