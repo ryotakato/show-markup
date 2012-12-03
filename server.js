@@ -28,13 +28,35 @@ if (!fs.existsSync(webRoot)) {
 
 var target;
 
-// server running
-app.listen(port, host);
-console.log('Server running at  http://' + host + ':' + port + '/');
 
+// run
+function run() {
+
+  comet.on('connection', function (socket) {
+    // client has connected
+  
+    // save to local variable
+    var file = target;
+  
+    exists(file, function() {
+      // first time draw
+      drawFile(socket, file);
+      fs.watchFile(file, { interval: 500 }, function (curr, prev) {
+        // draw after editted
+        drawFile(socket, file);
+      });
+    });
+  });
+  
+  // server running
+  app.listen(port, host);
+  console.log('Server running at http://' + host + ':' + port + '/');
+  console.log('document root is ' + docRoot);
+
+}
 
 // def handler
-function handler(req, res) {
+function handler(req, res) {//{{{
   req.on('end', function() {
     if (!comet.serve(req, res)) {
 
@@ -87,10 +109,11 @@ function handler(req, res) {
       }
     }
   });
-}
+}//}}}
+
 
 // ls to reqponse only markup files
-function lsMarkupFiles(res, dirName) {
+function lsMarkupFiles(res, dirName) {//{{{
   fs.readdir(dirName, function(err, files) {
     res.writeHead(200, {'Content-Type': 'text/html'});
     for (var i = 0; i < files.length; i ++) {
@@ -101,36 +124,20 @@ function lsMarkupFiles(res, dirName) {
     }
     res.end();
   });
-}
+}//}}}
 
-
-comet.on('connection', function (socket) {
-  // client has connected
-
-  // save to local variable
-  var file = target;
-
-  exists(file, function() {
-    // first time draw
-    drawFile(socket, file);
-    fs.watchFile(file, { interval: 500 }, function (curr, prev) {
-      // draw after editted
-      drawFile(socket, file);
-    });
-  });
-});
 
 // draw markup file to browser
-function drawFile(socket, file) {
+function drawFile(socket, file) {//{{{
   //console.log('redraw : ' + file);
   fs.readFile(file, 'utf8', function (err, text) {
     if (err) { throw err; }
     socket.emit('redraw', md.parse(text));
   });
-}
+}//}}}
 
 // file exists 
-function exists(file, existsCallback, notExistsCallback) {
+function exists(file, existsCallback, notExistsCallback) {//{{{
   fs.exists(file, function(exists) {
     if (exists) {
       existsCallback();
@@ -138,4 +145,12 @@ function exists(file, existsCallback, notExistsCallback) {
       notExistsCallback();
     }
   });
-}
+}//}}}
+
+
+
+exports.run = run;
+
+
+
+

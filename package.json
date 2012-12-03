@@ -1,8 +1,11 @@
 {
   "name": "show-markup",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "show markup file on browser at realtime",
   "main": "server.js",
+  "bin": {
+    "show-markup": "./bin/show-markup"
+  },
   "dependencies": {
     "comet.io": "~0.0.4",
     "markdown": "~0.4.0",
