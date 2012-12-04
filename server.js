@@ -14,6 +14,7 @@ var fs   = require('fs');
 var url = require('url');
 var path = require('path');
 var md   = require('markdown');
+var marked   = require('marked');
 var static = new(require('node-static').Server)(webRoot, {});
 var comet = require('comet.io').createServer();
 var app = require('http').createServer(handler);
@@ -138,6 +139,7 @@ function drawFile(socket, file) {//{{{
   fs.readFile(file, 'utf8', function (err, text) {
     if (err) { throw err; }
     socket.emit('redraw', md.parse(text));
+    //socket.emit('redraw', marked(text));
   });
 }//}}}
 
