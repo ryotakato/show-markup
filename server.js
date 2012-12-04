@@ -114,12 +114,17 @@ function handler(req, res) {//{{{
 
 // ls to reqponse only markup files
 function lsMarkupFiles(res, dirName) {//{{{
+  var rDirPath = path.relative(docRoot, dirName);
+  rDirPath = rDirPath && rDirPath + '/';
+  // read dir
   fs.readdir(dirName, function(err, files) {
+    // write to response
     res.writeHead(200, {'Content-Type': 'text/html'});
     for (var i = 0; i < files.length; i ++) {
       var file = files[i];
-      if (path.extname(file) in exts) {
-        res.write('<a href="' + path.relative(docRoot, dirName) + '/' + file + '" >' + file + '</a><br/>');
+      // if file is markup or directory
+      if (path.extname(file) in exts || fs.statSync(rDirPath + file).isDirectory()) {
+        res.write('<a href="/' + rDirPath + file + '" >' + file + '</a><br/>');
       }
     }
     res.end();
