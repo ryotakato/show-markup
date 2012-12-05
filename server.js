@@ -35,7 +35,7 @@ var parser = {
     return marked(text);
   },
   'textile' : function(text) {
-    return textilet(text);
+    return textile(text);
   },
 };
 
