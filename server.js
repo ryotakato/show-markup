@@ -5,16 +5,20 @@ var docRoot = process.cwd();
 var webRoot = __dirname + '/web';
 
 var exts = { 
-  '.md' : 'md', 
-  '.markdown' : 'md'
+  '.md' : 'markdown', 
+  '.markdown' : 'markdown',
+  '.tt' : 'textile',
+  '.textile' : 'textile',
 };
+
+
 
 
 var fs   = require('fs');
 var url = require('url');
 var path = require('path');
-var md   = require('markdown');
 var marked   = require('marked');
+var textile = require('textile-js');
 var static = new(require('node-static').Server)(webRoot, {});
 var comet = require('comet.io').createServer();
 var app = require('http').createServer(handler);
@@ -26,6 +30,14 @@ if (!fs.existsSync(webRoot)) {
 }
 
 
+var parser = {
+  'markdown' : function(text) {
+    return marked(text);
+  },
+  'textile' : function(text) {
+    return textilet(text);
+  },
+};
 
 var target;
 
@@ -104,6 +116,8 @@ function handler(req, res) {//{{{
               res.end()
             });
 
+          }, function() {
+            console.log('Error : not exists file');
           });
         });
 
@@ -138,8 +152,7 @@ function drawFile(socket, file) {//{{{
   //console.log('redraw : ' + file);
   fs.readFile(file, 'utf8', function (err, text) {
     if (err) { throw err; }
-    socket.emit('redraw', md.parse(text));
-    //socket.emit('redraw', marked(text));
+    socket.emit('redraw', parser[exts[path.extname(file)]](text));
   });
 }//}}}
 

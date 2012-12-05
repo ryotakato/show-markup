@@ -1,6 +1,6 @@
 {
   "name": "show-markup",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "show markup file on browser at realtime",
   "main": "server.js",
   "bin": {
@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "comet.io": "~0.0.4",
-    "markdown": "~0.4.0",
     "node-static": "~0.6.5",
-    "marked": "~0.2.6"
+    "marked": "~0.2.6",
+    "textile-js": "~0.1.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -27,7 +27,10 @@
     "markdown",
     "markup"
   ],
-  "author": "Ryota Kato",
+  "author": {
+    "name": "Ryota Kato",
+    "email": "ryotakato4@gmail.com"
+  },
   "license": "MIT",
   "readmeFilename": "README.md"
 }
