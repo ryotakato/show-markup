@@ -1,6 +1,6 @@
 {
   "name": "show-markup",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "show markup file on browser at realtime",
   "main": "server.js",
   "bin": {
@@ -15,7 +15,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node ./bin/show-markup"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,9 @@
   "keywords": [
     "comet",
     "ajax",
+    "markup",
     "markdown",
-    "markup"
+    "textile"
   ],
   "author": {
     "name": "Ryota Kato",

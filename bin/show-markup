@@ -1,6 +1,4 @@
 #!/usr/bin/env node
 
-var smu = require('../server.js');
-smu.run();
-
+require('../server.js').run();
 

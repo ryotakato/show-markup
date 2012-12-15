@@ -6,8 +6,8 @@ $(document).ready(function() {
     socket = io.connect();
   }
   socket.on("connect", function() {
-
-  }).on("redraw", function (html) {
-      $("html").html(html);
+    socket.emit('locate', { file:location.pathname });
+  }).on("draw", function (html) {
+    $("html").html(html);
   });
 });

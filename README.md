@@ -49,6 +49,10 @@ eee.md
 fff.tt  
 
 
+next, click file link.
+draw markup file as HTML.
+
+edit markup file, display file as HTML.
 
 
 

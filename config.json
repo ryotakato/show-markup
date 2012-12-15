@@ -1,0 +1,10 @@
+{
+  "host" : "localhost",
+  "port" : 3000,
+  "extension" : { 
+    ".md" : "markdown", 
+    ".markdown" : "markdown",
+    ".tt" : "textile",
+    ".textile" : "textile"
+  }
+}
